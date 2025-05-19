@@ -8,8 +8,9 @@ export const styles = StyleSheet.create({
         width: wp(30),
         height: hp(5),
         justifyContent: "center",
-        marginHorizontal: wp(2),
-        marginVertical: hp(1),
+        alignItems: "center",
+        // marginHorizontal: wp(2),
+        // marginVertical: hp(1),
     },
     timerPillText: {
         color: "#f7f6f4",

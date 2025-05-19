@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { wp } from "../../utils";
+import { hp, wp } from "../../utils";
 
 export const styles = StyleSheet.create({
     timerContainer: {
@@ -8,6 +8,8 @@ export const styles = StyleSheet.create({
     },
     timerPillContainerParent: {
         flexDirection : "row",
+        marginHorizontal: wp(2),
+        marginVertical: hp(1),
         width: wp(100),
         backgroundColor:"pink",
     },
