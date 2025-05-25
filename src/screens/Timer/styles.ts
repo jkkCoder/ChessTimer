@@ -8,9 +8,8 @@ export const styles = StyleSheet.create({
     },
     timerPillContainerParent: {
         flexDirection : "row",
-        marginHorizontal: wp(2),
-        marginVertical: hp(1),
+        justifyContent: "center",
         width: wp(100),
-        backgroundColor:"pink",
+        gap: wp(3),
     },
 })

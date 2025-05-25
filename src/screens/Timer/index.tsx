@@ -1,35 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Pressable } from 'react-native'
+import { SvgProps } from 'react-native-svg';
 import { styles } from './styles'
 import { useNavigation } from '@react-navigation/native'
 import TimerPill from '../../components/timePill'
+import { mockTimerPills } from '../../constants/constants';
 
-const MockForTimerPill = [
-  { isSingleOrDouble:'single', timerPillValue: 5, minutesOrSeconds: 'minutes' },
-  { isSingleOrDouble:'double', timerPillValue: { valueOne: 5, valueTwo: 10 }},
-  { isSingleOrDouble:'double', timerPillValue: { valueOne: 10, valueTwo: 5 }},
-]
 
-const Timer = () => {
+
+const Timer: React.FC = () => {
   const navigation = useNavigation<any>()
+
+  const [selectedTimerPillValue, setSelectedTimerPillValue] = useState<{value : number | { valueOne: number, valueTwo: number }, unit : 'minutes' | 'seconds'}>();
+
+  const handleGoBackToHomeCB = () => {
+    navigation.navigate('Home')
+  }
+
+  console.log("selectedTimerPillValue", selectedTimerPillValue)
   return (
     <View style={styles.timerContainer}>
-      <Pressable onPress={() => navigation.navigate('Home')}>
+      <Pressable onPress={handleGoBackToHomeCB}>
         <Text>Go To Home</Text>
       </Pressable >
-      {
-        MockForTimerPill?.map((dataToBeMapped: any, index:  number) => {
-          return (
-            <View key={index} style={styles.timerPillContainerParent}>
+      <View style={styles.timerPillContainerParent}>
+        {
+          mockTimerPills?.map((dataToBeMapped: any, index: number) => {
+            return (
               <TimerPill
-                isSingleOrDouble={dataToBeMapped?.isSingleOrDouble}
+                sectionHeaderValue={dataToBeMapped?.sectionHeaderValue}
+                minutesOrSeconds={dataToBeMapped?.minutesOrSeconds as 'minutes' | 'seconds'}
                 timerPillValue={dataToBeMapped?.timerPillValue}
-                minutesOrSeconds={dataToBeMapped?.minutesOrSeconds}
+                selectedTimerPillValue={selectedTimerPillValue}
+                setSelectedTimerPillValue={setSelectedTimerPillValue}
+                IconComponent={dataToBeMapped?.IconComponent}
               />
-            </View>
-          )
-        })
-      }
+            )
+          })
+        }
+      </View>
     </View>
   )
 }
