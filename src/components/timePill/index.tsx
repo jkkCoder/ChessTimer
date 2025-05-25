@@ -2,25 +2,24 @@ import React from 'react'
 import { View, Text, Pressable } from 'react-native'
 import { SvgProps } from 'react-native-svg';
 import { styles } from './styles'
+import { timeDuration } from '../../constants/timerPillConstants';
 
 interface TimerPillProps {
-    sectionHeaderValue?:"";
-    minutesOrSeconds?: 'minutes' | 'seconds';
+    timeDuration?: timeDuration;
     timerPillValue?: number | { valueOne: number, valueTwo: number };
-    selectedTimerPillValue?: {value : number | { valueOne: number, valueTwo: number }, unit : 'minutes' | 'seconds'};
+    selectedTimerPillValue?: {value : number | { valueOne: number, valueTwo: number }, unit : timeDuration};
     setSelectedTimerPillValue?: React.Dispatch<React.SetStateAction<{
     value: number | {
         valueOne: number;
         valueTwo: number;
     };
-    unit: "minutes" | "seconds";
+    unit: timeDuration;
 } | undefined>>;
     IconComponent?: React.FC<SvgProps>;
 }
 
 const TimerPill: React.FC<TimerPillProps> = ({ 
-    sectionHeaderValue="",
-    minutesOrSeconds = 'minutes',
+    timeDuration = 'minutes',
     timerPillValue = 0,
     selectedTimerPillValue = 0,
     setSelectedTimerPillValue,
@@ -28,22 +27,36 @@ const TimerPill: React.FC<TimerPillProps> = ({
 }) => {
 
     const handleGetValuesToParentCB = () => {
-        !!timerPillValue ? setSelectedTimerPillValue?.({value: timerPillValue, unit: minutesOrSeconds}) : "";    
+        !!timerPillValue ? setSelectedTimerPillValue?.({value: timerPillValue, unit: timeDuration}) : "";    
+    }
+
+    const getTimeDurationString = (duration: timeDuration) => {
+        switch(duration){
+            case "minutes":
+                return "mins"
+            case "seconds":
+                return "secs";
+            case "days":
+                return "days";
+            case "months":
+                return "months";
+            case "years":
+                return "years";
+        }
     }
 
 
   return (
-    <View style={styles.timerPillParentContainer}>
-      <View style={styles.timerPillHeaderSection}>{IconComponent && <IconComponent />} {sectionHeaderValue ? sectionHeaderValue : "Header"}</View>
+    <>
       <Pressable style={styles.timerPillContainer} onPress={handleGetValuesToParentCB}>
           {typeof timerPillValue === 'number' && (
-              <Text style={styles.timerPillText}>{`${timerPillValue} ${minutesOrSeconds === 'minutes' ? 'mins' : minutesOrSeconds === 'seconds' ? 'sec' : ''}`}</Text>
+              <Text style={styles.timerPillText}>{`${timerPillValue} ${(getTimeDurationString(timeDuration))}`}</Text>
           )}
           {typeof timerPillValue === 'object' && timerPillValue !== null && (
             <Text style={styles.timerPillText}>{`${timerPillValue.valueOne} | ${timerPillValue.valueTwo}`}</Text>
           )}
       </Pressable>
-    </View>
+    </>
   )
 }
 

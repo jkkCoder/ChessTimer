@@ -2,12 +2,6 @@ import { StyleSheet } from "react-native";
 import { hp, wp } from "../../utils";
 
 export const styles = StyleSheet.create({
-    timerPillParentContainer: {
-        flexDirection: "column",
-    },
-    timerPillHeaderSection: {
-        flexDirection: "row",
-    },
     timerPillContainer: {
         backgroundColor: "#464241",
         borderRadius: wp(1),
