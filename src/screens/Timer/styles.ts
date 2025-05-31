@@ -2,39 +2,30 @@ import { StyleSheet } from "react-native";
 import { hp, wp } from "../../utils";
 
 export const styles = StyleSheet.create({
-    timerContainer: {
+    timerScreenContainer: {
         flex: 1,
         backgroundColor: "#312d2a",
+        paddingHorizontal: wp(3),
     },
-    timerPillContainerParent: {
-        flexDirection: "column",
-        justifyContent: "center",
+    sectionTimerPillContainer: {
         width: wp(100),
         gap: wp(3),
     },
-    timerSectionContentsContainer: {
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        flexWrap: "wrap",
-        width: wp(100),
-        gap: wp(3),
-        paddingLeft: wp(2),
-    },
-    timerSectionContentsContainerFlexStart: {
-        flexDirection: "row",
-        width: wp(100),
-        gap: wp(3),
-        paddingLeft: wp(2),
-        // backgroundColor:"pink"
-    },
-    sectionTimerHeader: {
-        flexDirection: 'column', 
-        justifyContent: 'flex-start', 
-        alignItems: 'flex-start', 
-        marginBottom: 10,
+    sectionTimerHeaderContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        gap: wp(2),
     },
     sectionTimerHeaderText : {
         color: "#fff",
-        paddingLeft: wp(2),
-    }
+    },
+    featureTimerIconStyle : {
+        height: hp(5),
+        width: wp(5),
+    },
+    sectionListTimerPillRowContainer: {
+        flexDirection: "row",
+        gap: wp(2),
+        paddingVertical: hp(0.5),
+    },
 })

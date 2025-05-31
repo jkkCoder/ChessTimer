@@ -1,119 +1,40 @@
-import { SvgProps } from 'react-native-svg';
+import { ITimerControlsObj } from 'interface/timerInterface';
 import ClockIcon from '../assets/svg/timer.svg';
 import LightningIcon from '../assets/svg/thunder.svg';
-import CustomTimerIcon from '../assets/svg/custom-timer.svg';
 import Bullet from "../assets/svg/bullet.svg"
-import Sun from "../assets/svg/sun.svg"
 
-export type TimerPillValue = number | { valueOne: number; valueTwo: number };
-export type timeDuration = 'minutes' | 'seconds' | 'days' | 'months' | 'years';
 
-export interface TimerPillItem {
-  timeDuration: timeDuration;
-  timerPillValue: TimerPillValue;
-  IconComponent?: React.FC<SvgProps>;
-}
-
-export interface TimerSection {
-  title: string;
-  data: TimerPillItem[];
-}
-
-export const mockTimerPillsForBullet: TimerSection[] = [
+export const chessTimeControls : ITimerControlsObj[] = [
   {
-    title: "Bullet",
+    title: 'Bullet',
+    Icon: Bullet,
     data: [
-      {
-        timeDuration: "minutes",
-        timerPillValue: 5,
-        IconComponent: ClockIcon,
-      },
-      {
-        timeDuration: "minutes",
-        timerPillValue: 10,
-        IconComponent: ClockIcon,
-      },
-      {
-        timeDuration: "minutes",
-        timerPillValue: 15,
-        IconComponent: ClockIcon,
-      },
+      { displayString: '1 min', time: 60, incremental: 0 },
+      { displayString: '1 | 1', time: 60, incremental: 1 },
+      { displayString: '2 | 1', time: 120, incremental: 1 },
     ],
   },
-];
-
-export const mockTimerPillsForBlitz: TimerSection[] = [
   {
-    title: "Blitz",
+    title: 'Blitz',
+    Icon: LightningIcon,
     data: [
-      {
-        timeDuration: "minutes",
-        timerPillValue: 25,
-        IconComponent: LightningIcon,
-      },
-      {
-        timeDuration: "minutes",
-        timerPillValue: 45,
-        IconComponent: LightningIcon,
-      },
-      {
-        timeDuration: "minutes",
-        timerPillValue: 60,
-        IconComponent: LightningIcon,
-      },
+      { displayString: '3 min', time: 180, incremental: 0 },
+      { displayString: '3 | 2', time: 180, incremental: 2 },
+      { displayString: '5 min', time: 300, incremental: 0 },
+      { displayString: '5 | 5', time: 300, incremental: 5 },
+      { displayString: '5 | 2', time: 300, incremental: 2 },
     ],
   },
-];
-
-export const mockTimerPillsForRapid: TimerSection[] = [
   {
-    title: "Rapid",
+    title: 'Rapid',
+    Icon: ClockIcon,
     data: [
-      {
-        timeDuration: "minutes",
-        timerPillValue: { valueOne: 5, valueTwo: 2 },
-        IconComponent: undefined,
-      },
-      {
-        timeDuration: "minutes",
-        timerPillValue: { valueOne: 25, valueTwo: 5 },
-        IconComponent: ClockIcon,
-      },
+      { displayString: '10 min', time: 600, incremental: 0 },
+      { displayString: '15 | 10', time: 900, incremental: 10 },
+      { displayString: '30 min', time: 1800, incremental: 0 },
+      { displayString: '10 | 5', time: 600, incremental: 5 },
+      { displayString: '20 min', time: 1200, incremental: 0 },
+      { displayString: '60 min', time: 3600, incremental: 0 },
     ],
   },
-];
-
-export const mockTimerPillsForDaily: TimerSection[] = [
-  {
-    title: "Daily",
-    data: [
-      {
-        timeDuration: "days",
-        timerPillValue: 20,
-        IconComponent: LightningIcon,
-      },
-      {
-        timeDuration: "days",
-        timerPillValue: 20,
-        IconComponent: LightningIcon,
-      },
-      {
-        timeDuration: "days",
-        timerPillValue: 20,
-        IconComponent: LightningIcon,
-      },
-      {
-        timeDuration: "days",
-        timerPillValue: 20,
-        IconComponent: LightningIcon,
-      },
-    ],
-  },
-];
-
-export const allTimerSections = [
-  { key: 'bullet', data: mockTimerPillsForBullet, icon: Bullet},
-  { key: 'blitz', data: mockTimerPillsForBlitz, icon: LightningIcon },
-  { key: 'rapid', data: mockTimerPillsForRapid, icon: ClockIcon},
-  { key: 'daily', data: mockTimerPillsForDaily, icon: Sun},
 ];
