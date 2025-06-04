@@ -1,30 +1,14 @@
-import React, { useState } from 'react'
-import { View, Text, Pressable, SectionList } from 'react-native'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { View, Text, SectionList } from 'react-native'
 import { chessTimeControls } from '../../constants/timerPillConstants';
 import { hp, wp } from '../../utils';
 import { styles } from './styles'
 import TimerPill from '../../components/timerPill';
-import { ITimerPillValue } from 'interface/timerInterface';
-
-
 
 const Timer: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<any>>()
-
-  const [selectedTimerPillValue, setSelectedTimerPillValue] = useState<ITimerPillValue | {}>({});
-
-  console.log({selectedTimerPillValue})
-
-  const handleGoBackToHomeCB = () => {
-    navigation.navigate('Home')
-  }
 
   return (
     <View style={styles.timerScreenContainer}>
-      <Pressable onPress={handleGoBackToHomeCB}>
-        <Text>Go To Home</Text>
-      </Pressable >
       <View style={styles.sectionTimerPillContainer}>
         <SectionList
           sections={chessTimeControls}
@@ -52,7 +36,6 @@ const Timer: React.FC = () => {
                       displayString={pill.displayString}
                       time={pill.time}
                       incrementalValue={pill.incremental}
-                      setSelectedTimerPillValue={setSelectedTimerPillValue}
                     />
                   );
                 })}

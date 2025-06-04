@@ -10,7 +10,6 @@ export interface ITimerPillProps {
     displayString: string;
     time: number;
     incrementalValue: number;
-    setSelectedTimerPillValue: React.Dispatch<React.SetStateAction<any>>
 }
 
 export interface ITimerControlsObj {
