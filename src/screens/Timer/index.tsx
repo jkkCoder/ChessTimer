@@ -5,36 +5,16 @@ import {chessTimeControls} from '../../constants/timerPillConstants';
 import {hp, wp} from '../../utils';
 import {styles} from './styles';
 import TimerPill from '../../components/timerPill';
-import {ITimerPillValue} from 'interface/timerInterface';
 import Slider from '@react-native-community/slider';
 
 const Timer: React.FC = () => {
   const navigation = useNavigation<NavigationProp<any>>();
-
-  const [selectedTimerPillValue, setSelectedTimerPillValue] = useState<
-    ITimerPillValue | {}
-  >({});
   const [initialTime, setSInitialTime] = useState(0);
   const [bonusTime, setBonusTime] = useState(0);
 
-  const handleGoBackToHomeCB = () => {
-    navigation.navigate('Home');
-  };
-
-  //For Custom timer
-  const handleGetValuesToParentCB = () => {
-    setSelectedTimerPillValue({
-      displayString: `${initialTime} | ${bonusTime}`,
-      incrementalValue: bonusTime,
-      time: initialTime
-    })
-  }
 
   return (
     <View style={styles.timerScreenContainer}>
-      <Pressable onPress={handleGoBackToHomeCB}>
-        <Text>Go To Home</Text>
-      </Pressable>
       <View style={styles.sectionTimerPillContainer}>
         <SectionList
           sections={chessTimeControls}
@@ -61,7 +41,6 @@ const Timer: React.FC = () => {
                       displayString={pill.displayString}
                       time={pill.time}
                       incrementalValue={pill.incremental}
-                      setSelectedTimerPillValue={setSelectedTimerPillValue}
                     />
                   );
                 })}
@@ -114,7 +93,12 @@ const Timer: React.FC = () => {
 
         <Pressable 
           style={styles.selectBtn}
-          onPress={handleGetValuesToParentCB}
+          onPress={() => {
+            navigation.navigate('Home',{
+              time: initialTime * 60,
+              incrementalValue: bonusTime
+            })
+          }}
         >
           <Text style={styles.btnColor}>Select</Text>
         </Pressable>
