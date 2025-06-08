@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
         backgroundColor: 'gray',
         borderRadius: wp(2),
         padding: wp(3),
-        marginTop: wp(5)
+        marginTop: hp(4)
     },
     sliderWrapper : {
         width: '93%',
@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
     },
     btnColor:{
         color:'white',
-        fontSize: 20,
+        fontSize: wp(4),
         fontWeight: 'bold'
     }
 })

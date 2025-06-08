@@ -12,6 +12,11 @@ const Timer: React.FC = () => {
   const [initialTime, setSInitialTime] = useState(0);
   const [bonusTime, setBonusTime] = useState(0);
 
+  const initialStartTime = 0;
+  const bonusStartTime = 0;
+  const initialEndTimeLable = 120; 
+  const bonusEndTimeLabel = 60;
+
 
   return (
     <View style={styles.timerScreenContainer}>
@@ -55,7 +60,7 @@ const Timer: React.FC = () => {
           Initial Time <Text style={styles.time}>{initialTime} min</Text>
         </Text>
         <View style={styles.sliderWrapper}>
-          <Text style={styles.startTime}>0</Text>
+          <Text style={styles.startTime}>{initialStartTime}</Text>
           <View style={styles.sliderparent}>
             <Slider
               style={styles.slider}
@@ -68,14 +73,14 @@ const Timer: React.FC = () => {
               onValueChange={value => setSInitialTime(Math.floor(value))}
             />
           </View>
-          <Text style={styles.endTime}>120</Text>
+          <Text style={styles.endTime}>{initialEndTimeLable}</Text>
         </View>
 
         <Text style={styles.timeHeader}>
           Bonus Time <Text style={styles.time}>{bonusTime} sec</Text>
         </Text>
         <View style={styles.sliderWrapper}>
-          <Text style={styles.startTime}>0</Text>
+          <Text style={styles.startTime}>{bonusStartTime}</Text>
           <View style={styles.sliderparent}>
             <Slider
               style={styles.slider}
@@ -88,7 +93,7 @@ const Timer: React.FC = () => {
               onValueChange={value => setBonusTime(Math.floor(value))}
             />
           </View>
-          <Text style={styles.endTime}>60</Text>
+          <Text style={styles.endTime}>{bonusEndTimeLabel}</Text>
         </View>
 
         <Pressable 
