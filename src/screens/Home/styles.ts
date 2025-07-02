@@ -1,5 +1,72 @@
 import { StyleSheet } from "react-native";
+import { hp, wp } from "../../utils"
 
 export const styles = StyleSheet.create({
-    
+    mainTimerScreenContainer :{
+        display: "flex",
+        flex: 1,
+        // backgroundColor: "pink",
+    },
+    timerContainerOne : {
+        backgroundColor: "#1f2937",
+        height: hp(40),
+        width: wp(100),
+        justifyContent: "center",
+        alignItems: "center",
+        transform: [{
+            rotateZ: "180deg",
+        }],
+        gap: hp(1),
+    },
+    timerContainerTwo : {
+        backgroundColor: "#111749",
+        height: hp(44),
+        width: wp(100),
+        justifyContent: "center",
+        alignItems: "center",
+        gap: hp(1),
+    },
+    playerNameText : {
+        fontSize: 18,
+        color: "#9ca3af",
+        fontWeight: 600,
+    },
+    playerTimer : {
+        fontSize: 96,
+        color: "#f9fafb",
+    },
+    movesCountTextContainer : {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    movesTextLabel : {
+        color: "#9ca3af",
+        fontSize: 20,
+    },
+    movesTextValue : {
+        fontSize: 20,
+        color: "#9ca3af",
+        fontWeight: 400,
+    },
+    mainTimerScreenContainerTwo : {
+
+    },
+    chessPlayerControls : {
+        height: hp(12),
+        backgroundColor: "#111827",
+    },
+    pebbleTimeContainer : {
+        backgroundColor: "#242e3c",
+        borderWidth: wp(0.2),
+        borderRadius: 10,
+        paddingTop: hp(0.8),
+        paddingBottom: hp(0.8),
+        paddingLeft: wp(4),
+        paddingRight: wp(4),
+        borderColor: "#3741514D"
+    },
+    pebbleTime : {
+        fontSize: 14,
+        color: "#9ca3af",
+    }
 })
