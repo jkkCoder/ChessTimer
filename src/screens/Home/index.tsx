@@ -2,6 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import { styles } from './styles'
 import { useNavigation } from '@react-navigation/native'
+import moment from 'moment'
 // import clockIcon from "../../assets/svg/main-screen-clock.svg
 
 const Home = ({ route }: any) => {
@@ -12,7 +13,7 @@ const Home = ({ route }: any) => {
 
   console.log({displayString, time, incrementalValue});
 
-  // const [playerOneTime, setPlayerOneTime] = useState()
+  // const [playerOneTime, setPlayerOneTime] = useState(moment)
 
   return (
   <View style={styles.mainTimerScreenContainer}>
