@@ -6,13 +6,13 @@ import Home from './src/screens/Home';
 import Timer from './src/screens/Timer';
 
 const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Home',
+  initialRouteName: 'Timer',
   screenOptions: {
     headerShown: false,
   },
   screens: {
-    Home: Home,
-    Timer: Timer
+    Timer: Timer,
+    Home: Home
   },
 });
 
