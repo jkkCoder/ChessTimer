@@ -5,8 +5,10 @@
     "baseUrl": ".", 
     "paths": {
       "*": ["src/*"]
-    }
+    },
+    "esModuleInterop": true, // ✅ must be true for import moment from 'moment'
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src", "declarations.d.ts"]
+  "include": ["src", "declaration.d.ts"]
 }
 

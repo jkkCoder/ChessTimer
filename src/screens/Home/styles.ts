@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
         gap: hp(1),
     },
     timerContainerTwo : {
-        backgroundColor: "#111749",
+        backgroundColor: "#1f2937",
         height: hp(44),
         width: wp(100),
         justifyContent: "center",
@@ -54,6 +54,17 @@ export const styles = StyleSheet.create({
     chessPlayerControls : {
         height: hp(12),
         backgroundColor: "#111827",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: wp(5),
+    },
+    controlItem : {
+        height: wp(18),
+        width: wp(18),
+        backgroundColor: "pink",
+        borderRadius: wp(9),
     },
     pebbleTimeContainer : {
         backgroundColor: "#242e3c",
@@ -68,5 +79,11 @@ export const styles = StyleSheet.create({
     pebbleTime : {
         fontSize: 14,
         color: "#9ca3af",
+    },
+    activePlayerAreaColor : {
+        backgroundColor: "#111749",
+    },
+    inActivePlayerAreaColor : {
+        backgroundColor : "#1c2b38"
     }
 })
