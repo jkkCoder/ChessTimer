@@ -3,6 +3,7 @@ import { View, Text, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { styles } from './styles'
 import moment from 'moment';
+import ConfirmationPopUp from '../../components/ConfirmationPopUp';
 
 const Home = ({ route }: any) => {
 
@@ -51,6 +52,9 @@ const Home = ({ route }: any) => {
   // Audio state :
   const [enableAudio, setEnableAudio] = useState<boolean>(true);
 
+  // Confirmation popup visibility state :
+  const [isConfirmationPopUpVisible, setIsConfirmationPopUpVisible] = useState<boolean>(false);
+
   // Player One Effect :
   useEffect(() => {
     let firstPlayerTimer: any = null;
@@ -64,7 +68,7 @@ const Home = ({ route }: any) => {
        setGameStatus("finished");
        clearInterval(firstPlayerTimer);
     }
-    return () => firstPlayerTimer && clearInterval(firstPlayerTimer)
+    return () => firstPlayerTimer && clearInterval(firstPlayerTimer!)
   }, [activePlayer, playerOneTime, gameStatus])
 
   // Player Two Effect :
@@ -80,7 +84,7 @@ const Home = ({ route }: any) => {
       setGameStatus('finished');
       clearInterval(secondPlayerTimer);
     }
-    return () => secondPlayerTimer && clearInterval(secondPlayerTimer)
+    return () => secondPlayerTimer && clearInterval(secondPlayerTimer!)
   }, [activePlayer, playerTwoTime, gameStatus])
 
 
@@ -118,7 +122,8 @@ const Home = ({ route }: any) => {
     }
   }, [activePlayer, incrementalValue, gameStatus, playerTwoTime])
 
-  const handleResetBothTimers = () => {
+  const handleOnSuccessConfirmationCB = () => {
+    setIsConfirmationPopUpVisible(false);
     setActivePlayer("");
     setLastActivePlayerBeforePause("");
     setPlayerOneTime(time);
@@ -127,6 +132,19 @@ const Home = ({ route }: any) => {
     setPlayerTwoMoveCount(0);
     setTimeUpColor("");
     setGameStatus('initial');
+  }
+
+  const handleOnCancelConfirmationCB = () => {
+    setGameStatus("playing");
+    setIsConfirmationPopUpVisible(false);
+    setActivePlayer(lastActivePlayerBeforePause);
+  }
+
+  const handleResetControl = () => {
+    setLastActivePlayerBeforePause(activePlayer);
+    setGameStatus("paused");
+    setActivePlayer("");
+    setIsConfirmationPopUpVisible(true);
   }
 
   const handlePlayPauseGame = () => {
@@ -155,6 +173,12 @@ const Home = ({ route }: any) => {
 
   return (
     <View style={styles.mainTimerScreenContainer}>
+      {isConfirmationPopUpVisible ? <View style={styles.confirmationPopupParentContainer}>
+        <ConfirmationPopUp
+          onPressSuccesCB={handleOnSuccessConfirmationCB}
+          onPressCancelCB={handleOnCancelConfirmationCB}
+        />
+      </View> : <></>}
       <Pressable
         style={
           [
@@ -179,7 +203,7 @@ const Home = ({ route }: any) => {
         </View>
       </Pressable>
       <View style={styles.chessPlayerControls}>
-        <Pressable style={styles.controlItem} onPress={handleResetBothTimers}><Text>Reset</Text></Pressable>
+        <Pressable style={styles.controlItem} onPress={handleResetControl}><Text>Reset</Text></Pressable>
         <Pressable style={styles.controlItem} onPress={handlePlayPauseGame} disabled={gameStatus === "finished"}><Text>{gameStatus === "playing" ? 'Pause' : 'Play'}</Text></Pressable>
         <Pressable style={styles.controlItem} onPress={handleAudioSetting}><Text>{enableAudio ? "Audio on" : "Audio off"}</Text></Pressable>
         <Pressable style={styles.controlItem} onPress={handleNavigateToTimePillSelectionPage}><Text>Clock</Text></Pressable>
