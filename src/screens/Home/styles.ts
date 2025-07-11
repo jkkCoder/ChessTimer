@@ -65,6 +65,8 @@ export const styles = StyleSheet.create({
         width: wp(18),
         backgroundColor: "pink",
         borderRadius: wp(9),
+        justifyContent: "center",
+        alignItems: "center",
     },
     pebbleTimeContainer : {
         backgroundColor: "#242e3c",

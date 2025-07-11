@@ -25,6 +25,8 @@ const Home = ({ route }: any) => {
     return moment.utc(seconds * 1000).format('mm:ss');
   };
 
+  // States :
+  // Active player state
   const [activePlayer, setActivePlayer] = useState<string>("");
 
   // Time Up color state :
@@ -40,35 +42,46 @@ const Home = ({ route }: any) => {
   const [playerTwoTime, setPlayerTwoTime] = useState(time)
   const [playerTwoMoveCount, setPlayerTwoMoveCount] = useState<number>(0)
 
+  // Game status state :
+  const [gameStatus, setGameStatus] = useState<'initial' | 'playing' | 'paused' | 'finished'>('initial')
+
+  // Last active player before pause:
+  const [lastActivePlayerBeforePause, setLastActivePlayerBeforePause] = useState<string>('');
+
+  // Audio state :
+  const [enableAudio, setEnableAudio] = useState<boolean>(true);
+
   // Player One Effect :
   useEffect(() => {
     let firstPlayerTimer: any = null;
-    if (activePlayer === "playerOne" && playerOneTime > 0) {
+    if (activePlayer === "playerOne" && playerOneTime > 0 && gameStatus === 'playing') {
       firstPlayerTimer = setInterval(() => {
         setPlayerOneTime((prev: number) => prev - 1)
       }, 1000);
-    } else if (playerOneTime <= 0) {
+    } else if (playerOneTime <= 0 && gameStatus !== 'finished') {
        setTimeUpColor("red");
        setActivePlayer("");
+       setGameStatus("finished");
        clearInterval(firstPlayerTimer);
     }
     return () => firstPlayerTimer && clearInterval(firstPlayerTimer)
-  }, [activePlayer, playerOneTime])
+  }, [activePlayer, playerOneTime, gameStatus])
 
   // Player Two Effect :
   useEffect(() => {
     let secondPlayerTimer: any = null;
-    if (activePlayer === "playerTwo" && playerTwoTime > 0) {
+    if (activePlayer === "playerTwo" && playerTwoTime > 0 && gameStatus === 'playing') {
       secondPlayerTimer = setInterval(() => {
         setPlayerTwoTime((prev: number) => prev - 1)
       }, 1000);
-    } else if (playerTwoTime <= 0) {
+    } else if (playerTwoTime <= 0 && gameStatus !== 'finished') {
       setTimeUpColor("red");
       setActivePlayer("");
+      setGameStatus('finished');
       clearInterval(secondPlayerTimer);
     }
     return () => secondPlayerTimer && clearInterval(secondPlayerTimer)
-  }, [activePlayer, playerTwoTime])
+  }, [activePlayer, playerTwoTime, gameStatus])
 
 
   // Refs of Player 1, Player 2 Sections :
@@ -76,47 +89,64 @@ const Home = ({ route }: any) => {
   const playerOneRef = useRef(null)
 
   const handlePlayerOneCTA = useCallback(() => {
-    if (playerOneTime <= 0 && activePlayer === "playerOne") {
+    if (playerOneTime <= 0 && activePlayer === "playerOne" || gameStatus === "finished") {
       Alert.alert("Player one time is Zero, cannot make a move");
       return;
     }
+    if(gameStatus !== 'playing') {
+      setGameStatus('playing');
+    }
     setPlayerOneMoveCount((prev: number) => prev + 1);
     setPlayerOneTime((prev: number) => prev + incrementalValue);
-    if (activePlayer === "") {
-      setActivePlayer("playerTwo")
-    } else if (activePlayer === "playerOne") {
+    if (activePlayer === "" || activePlayer === "playerOne") {
       setActivePlayer("playerTwo")
     }
-  }, [activePlayer, incrementalValue])
+  }, [activePlayer, incrementalValue, gameStatus, playerOneTime])
 
   const handlePlayerTwoCTA = useCallback(() => {
-    if (playerTwoTime <= 0 && activePlayer === "playerTwo") {
+    if (playerTwoTime <= 0 && activePlayer === "playerTwo" || gameStatus === "finished") {
       Alert.alert("Player two time is Zero, cannot make a move");
       return;
     }
+    if (gameStatus !== 'playing') {
+      setGameStatus('playing');
+    }
     setPlayerTwoMoveCount((prev: number) => prev + 1);
     setPlayerTwoTime((prev: number) => prev + incrementalValue);
-    if (activePlayer === "") {
-      setActivePlayer("playerOne")
-    } else if (activePlayer === "playerTwo") {
+    if (activePlayer === "" || activePlayer === "playerTwo") {
       setActivePlayer("playerOne")
     }
-  }, [activePlayer, incrementalValue])
+  }, [activePlayer, incrementalValue, gameStatus, playerTwoTime])
 
   const handleResetBothTimers = () => {
     setActivePlayer("");
+    setLastActivePlayerBeforePause("");
     setPlayerOneTime(time);
     setPlayerTwoTime(time);
     setPlayerOneMoveCount(0);
     setPlayerTwoMoveCount(0);
+    setTimeUpColor("");
+    setGameStatus('initial');
   }
 
-  const handleStartGame = () => {
-    setActivePlayer("playerOne");
+  const handlePlayPauseGame = () => {
+    if(gameStatus === "initial") {
+      setActivePlayer("playerOne");
+      setGameStatus('playing');
+    }
+    if(gameStatus === 'playing') {
+      setGameStatus('paused');
+      setLastActivePlayerBeforePause(activePlayer);
+      setActivePlayer('');
+    }
+    if(gameStatus === 'paused') {
+      setGameStatus('playing');
+      setActivePlayer(lastActivePlayerBeforePause);
+    }
   }
 
   const handleAudioSetting = () => {
-    {/* Handle the audio settings in this function */}
+    setEnableAudio((prev : boolean) => !prev)
   }
 
   const handleNavigateToTimePillSelectionPage = () => {
@@ -135,7 +165,7 @@ const Home = ({ route }: any) => {
         }
         ref={playerOneRef}
         onPress={handlePlayerOneCTA}
-        disabled={activePlayer === "playerTwo" || playerOneTime <= 0 || playerTwoTime <= 0}
+        disabled={activePlayer === "playerTwo" || playerOneTime <= 0 || playerTwoTime <= 0 || gameStatus === "finished" || gameStatus === "paused"}
       >
         <Text style={[styles.playerNameText, (playerOneTime <= 0) && {color: "#fff"}]}>Player 1</Text>
         <Text style={styles.playerTimer}>{formatDuration(playerOneTime)}</Text>
@@ -149,11 +179,10 @@ const Home = ({ route }: any) => {
         </View>
       </Pressable>
       <View style={styles.chessPlayerControls}>
-        {/* <Text>Here the chess timer controls should be present</Text> */}
-        <Pressable style={styles.controlItem} onPress={handleResetBothTimers}></Pressable>
-        <Pressable style={styles.controlItem} onPress={handleStartGame}></Pressable>
-        <Pressable style={styles.controlItem} onPress={handleAudioSetting}></Pressable>
-        <Pressable style={styles.controlItem} onPress={handleNavigateToTimePillSelectionPage}></Pressable>
+        <Pressable style={styles.controlItem} onPress={handleResetBothTimers}><Text>Reset</Text></Pressable>
+        <Pressable style={styles.controlItem} onPress={handlePlayPauseGame}><Text>{gameStatus === "playing" ? 'Play' : 'Pause'}</Text></Pressable>
+        <Pressable style={styles.controlItem} onPress={handleAudioSetting}><Text>{enableAudio ? "Audio on" : "Audio off"}</Text></Pressable>
+        <Pressable style={styles.controlItem} onPress={handleNavigateToTimePillSelectionPage}><Text>Clock</Text></Pressable>
       </View>
       <Pressable
         style={
@@ -165,7 +194,7 @@ const Home = ({ route }: any) => {
         }
         ref={playerTwoRef}
         onPress={handlePlayerTwoCTA}
-        disabled={activePlayer === "playerOne" || playerTwoTime <= 0 || playerOneTime <= 0}
+        disabled={activePlayer === "playerOne" || playerTwoTime <= 0 || playerOneTime <= 0 || gameStatus === "finished" || gameStatus === "paused"}
       >
         <Text style={[styles.playerNameText, (playerTwoTime <= 0) && {color: "#fff"}]}>Player 2</Text>
         <Text style={styles.playerTimer}>{formatDuration(playerTwoTime)}</Text>
