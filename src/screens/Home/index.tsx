@@ -180,7 +180,7 @@ const Home = ({ route }: any) => {
       </Pressable>
       <View style={styles.chessPlayerControls}>
         <Pressable style={styles.controlItem} onPress={handleResetBothTimers}><Text>Reset</Text></Pressable>
-        <Pressable style={styles.controlItem} onPress={handlePlayPauseGame}><Text>{gameStatus === "playing" ? 'Play' : 'Pause'}</Text></Pressable>
+        <Pressable style={styles.controlItem} onPress={handlePlayPauseGame} disabled={gameStatus === "finished"}><Text>{gameStatus === "playing" ? 'Pause' : 'Play'}</Text></Pressable>
         <Pressable style={styles.controlItem} onPress={handleAudioSetting}><Text>{enableAudio ? "Audio on" : "Audio off"}</Text></Pressable>
         <Pressable style={styles.controlItem} onPress={handleNavigateToTimePillSelectionPage}><Text>Clock</Text></Pressable>
       </View>
