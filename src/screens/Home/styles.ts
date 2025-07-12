@@ -101,6 +101,7 @@ export const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.4)', // Optional: dimmed background
     },
     controlTextStyle : {
-        color: "#FFF"
+        color: "#FFF",
+        fontSize: wp(6)
     }
 })
