@@ -94,10 +94,7 @@ const Home = ({ route }: any) => {
 
   // Player One onPress function :
   const handlePlayerOneCTA = useCallback(() => {
-    if (playerOneTime <= 0 && activePlayer === "playerOne" || gameStatus === "finished") {
-      Alert.alert("Player one time is Zero, cannot make a move");
-      return;
-    }
+    if(gameStatus === "finished") setIsConfirmationPopUpVisible(true)
     if(gameStatus !== 'playing') {
       setGameStatus('playing');
     }
@@ -110,10 +107,7 @@ const Home = ({ route }: any) => {
 
   // Player Two onPress function :
   const handlePlayerTwoCTA = useCallback(() => {
-    if (playerTwoTime <= 0 && activePlayer === "playerTwo" || gameStatus === "finished") {
-      Alert.alert("Player two time is Zero, cannot make a move");
-      return;
-    }
+    if(gameStatus === "finished") setIsConfirmationPopUpVisible(true)
     if (gameStatus !== 'playing') {
       setGameStatus('playing');
     }
@@ -123,12 +117,6 @@ const Home = ({ route }: any) => {
       setActivePlayer("playerOne")
     }
   }, [activePlayer, incrementalValue, gameStatus, playerTwoTime])
-
-  useEffect(()=>{
-    if(gameStatus === "finished"){
-      setIsConfirmationPopUpVisible(true);
-    }
-  },[gameStatus])
 
   const handleOnSuccessConfirmationCB = () => {
     setIsConfirmationPopUpVisible(false);
@@ -171,7 +159,7 @@ const Home = ({ route }: any) => {
     }
   }
 
-  const handleAudioSetting = () => {
+  const handleAudioControl = () => {
     setEnableAudio((prev : boolean) => !prev)
   }
 
@@ -198,7 +186,7 @@ const Home = ({ route }: any) => {
         }
         ref={playerOneRef}
         onPress={handlePlayerOneCTA}
-        disabled={activePlayer === "playerTwo" || playerOneTime <= 0 || playerTwoTime <= 0 || gameStatus === "finished" || gameStatus === "paused"}
+        disabled={activePlayer === "playerTwo" || gameStatus === "paused"}
       >
         <Text style={[styles.playerNameText, (playerOneTime <= 0) && {color: "#fff"}]}>Player 1</Text>
         <Text style={styles.playerTimer}>{formatDuration(playerOneTime)}</Text>
@@ -240,7 +228,7 @@ const Home = ({ route }: any) => {
             styles.controlItem,
             pressed && { opacity: 0.7 }
           ]}
-          onPress={handleAudioSetting}
+          onPress={handleAudioControl}
           accessibilityLabel={enableAudio ? "Disable audio" : "Enable audio"}
         >
           <Text style={styles.controlTextStyle}>
@@ -268,7 +256,7 @@ const Home = ({ route }: any) => {
         }
         ref={playerTwoRef}
         onPress={handlePlayerTwoCTA}
-        disabled={activePlayer === "playerOne" || playerTwoTime <= 0 || playerOneTime <= 0 || gameStatus === "finished" || gameStatus === "paused"}
+        disabled={activePlayer === "playerOne" || gameStatus === "paused"}
       >
         <Text style={[styles.playerNameText, (playerTwoTime <= 0) && {color: "#fff"}]}>Player 2</Text>
         <Text style={styles.playerTimer}>{formatDuration(playerTwoTime)}</Text>
