@@ -92,6 +92,7 @@ const Home = ({ route }: any) => {
   const playerTwoRef = useRef(null)
   const playerOneRef = useRef(null)
 
+  // Player One onPress function :
   const handlePlayerOneCTA = useCallback(() => {
     if (playerOneTime <= 0 && activePlayer === "playerOne" || gameStatus === "finished") {
       Alert.alert("Player one time is Zero, cannot make a move");
@@ -107,6 +108,7 @@ const Home = ({ route }: any) => {
     }
   }, [activePlayer, incrementalValue, gameStatus, playerOneTime])
 
+  // Player Two onPress function :
   const handlePlayerTwoCTA = useCallback(() => {
     if (playerTwoTime <= 0 && activePlayer === "playerTwo" || gameStatus === "finished") {
       Alert.alert("Player two time is Zero, cannot make a move");
@@ -121,6 +123,12 @@ const Home = ({ route }: any) => {
       setActivePlayer("playerOne")
     }
   }, [activePlayer, incrementalValue, gameStatus, playerTwoTime])
+
+  useEffect(()=>{
+    if(gameStatus === "finished"){
+      setIsConfirmationPopUpVisible(true);
+    }
+  },[gameStatus])
 
   const handleOnSuccessConfirmationCB = () => {
     setIsConfirmationPopUpVisible(false);
@@ -175,6 +183,7 @@ const Home = ({ route }: any) => {
     <View style={styles.mainTimerScreenContainer}>
       {isConfirmationPopUpVisible ? <View style={styles.confirmationPopupParentContainer}>
         <ConfirmationPopUp
+          key={"resetPopUp"}
           onPressSuccesCB={handleOnSuccessConfirmationCB}
           onPressCancelCB={handleOnCancelConfirmationCB}
         />
@@ -203,10 +212,51 @@ const Home = ({ route }: any) => {
         </View>
       </Pressable>
       <View style={styles.chessPlayerControls}>
-        <Pressable style={styles.controlItem} onPress={handleResetControl}><Text>Reset</Text></Pressable>
-        <Pressable style={styles.controlItem} onPress={handlePlayPauseGame} disabled={gameStatus === "finished"}><Text>{gameStatus === "playing" ? 'Pause' : 'Play'}</Text></Pressable>
-        <Pressable style={styles.controlItem} onPress={handleAudioSetting}><Text>{enableAudio ? "Audio on" : "Audio off"}</Text></Pressable>
-        <Pressable style={styles.controlItem} onPress={handleNavigateToTimePillSelectionPage}><Text>Clock</Text></Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.controlItem,
+            pressed && { opacity: 0.7 }
+          ]}
+          onPress={handleResetControl}
+          accessibilityLabel="Reset game"
+        >
+          <Text style={styles.controlTextStyle}>🔄</Text>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.controlItem,
+            pressed && { opacity: 0.7 }
+          ]}
+          onPress={handlePlayPauseGame}
+          disabled={gameStatus === "finished"}
+          accessibilityLabel={gameStatus === "playing" ? "Pause game" : "Play game"}
+        >
+          <Text style={styles.controlTextStyle}>
+            {gameStatus === "playing" ? '⏸' : '▶️'}
+          </Text>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.controlItem,
+            pressed && { opacity: 0.7 }
+          ]}
+          onPress={handleAudioSetting}
+          accessibilityLabel={enableAudio ? "Disable audio" : "Enable audio"}
+        >
+          <Text style={styles.controlTextStyle}>
+            {enableAudio ? "🔊" : "🔇"}
+          </Text>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.controlItem,
+            pressed && { opacity: 0.7 }
+          ]}
+          onPress={handleNavigateToTimePillSelectionPage}
+          accessibilityLabel="Change clock settings"
+        >
+          <Text style={styles.controlTextStyle}>⏰ </Text>
+        </Pressable>
       </View>
       <Pressable
         style={

@@ -4,7 +4,7 @@ import { hp, wp } from "../../utils";
 export const styles = StyleSheet.create({
     timerScreenContainer: {
         flex: 1,
-        backgroundColor: "#312d2a",
+        backgroundColor: "#141427",
         paddingHorizontal: wp(3),
     },
     sectionTimerPillContainer: {

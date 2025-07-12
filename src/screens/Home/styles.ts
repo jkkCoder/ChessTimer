@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     controlItem : {
         height: wp(18),
         width: wp(18),
-        backgroundColor: "pink",
+        backgroundColor: "#242e3c",
         borderRadius: wp(9),
         justifyContent: "center",
         alignItems: "center",
@@ -99,5 +99,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         zIndex: 1000,
         backgroundColor: 'rgba(0,0,0,0.4)', // Optional: dimmed background
+    },
+    controlTextStyle : {
+        color: "#FFF"
     }
 })

@@ -3,7 +3,7 @@ import { hp, wp } from "../../utils";
 
 export const styles = StyleSheet.create({
     timerPillContainer: {
-        backgroundColor: "#464241",
+        backgroundColor: "#1f2937",
         borderRadius: wp(1),
         width: wp(30),
         height: hp(5),
