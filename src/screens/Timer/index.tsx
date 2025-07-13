@@ -52,6 +52,11 @@ const Timer: React.FC = () => {
         visibilityTime: 3000,
         autoHide: true,
         bottomOffset: 90,
+        props: {
+          text1Style: { fontSize: 16, fontWeight: 'bold', color: '#fff' },
+          text2Style: { fontSize: 14, color: '#333' },
+          containerStyle: { borderRadius: 10, backgroundColor: '#1c2b38' },
+        },
       });
     }
   }

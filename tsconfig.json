@@ -1,7 +1,7 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "types": ["react", "react-native"],
+    "types": ["react", "react-native", "react-native-toast-message"],
     "baseUrl": ".", 
     "paths": {
       "*": ["src/*"]

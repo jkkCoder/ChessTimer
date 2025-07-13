@@ -4,6 +4,8 @@ import { createStaticNavigation, NavigationContainer } from '@react-navigation/n
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screens/Home';
 import Timer from './src/screens/Timer';
+import toastConfig from './toastConfig';
+import Toast from 'react-native-toast-message';
 
 const RootStack = createNativeStackNavigator({
   initialRouteName: 'Timer',
@@ -22,6 +24,7 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Navigation />
+      <Toast config={toastConfig} />
     </SafeAreaView>
   )
 }
