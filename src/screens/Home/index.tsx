@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { View, Text, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { formatDuration } from '../../utils';
 import { styles } from './styles'
-import moment from 'moment';
 import ConfirmationPopUp from '../../components/ConfirmationPopUp';
 
 const Home = ({ route }: any) => {
@@ -11,20 +11,6 @@ const Home = ({ route }: any) => {
 
   // destructuring selected values from Time Pill Selection Screen :
   const { displayString = '', time = 0, incrementalValue = 0 } = route.params || {};
-
-  // Format "seconds" to "Minute : Seconds" format :
-  const formatDuration = (seconds: number | undefined | null): string => {
-
-    if (typeof seconds !== 'number' || isNaN(seconds)) {
-      return '00:00';
-    }
-
-    if (seconds <= 0) {
-      return '00:00';
-    }
-
-    return moment.utc(seconds * 1000).format('mm:ss');
-  };
 
   // States :
   // Active player state
@@ -36,8 +22,6 @@ const Home = ({ route }: any) => {
   // Player One states :
   const [playerOneTime, setPlayerOneTime] = useState(time)
   const [playerOneMoveCount, setPlayerOneMoveCount] = useState<number>(0)
-
-    console.log(formatDuration(playerOneTime))
 
   // Player Two states :
   const [playerTwoTime, setPlayerTwoTime] = useState(time)
