@@ -82,8 +82,10 @@ const Home = ({ route }: any) => {
     if(gameStatus !== 'playing') {
       setGameStatus('playing');
     }
-    setPlayerOneMoveCount((prev: number) => prev + 1);
-    setPlayerOneTime((prev: number) => prev + incrementalValue);
+    if(activePlayer === "playerOne") {
+      setPlayerOneMoveCount((prev: number) => prev + 1);
+      setPlayerOneTime((prev: number) => prev + incrementalValue);
+    }
     if (activePlayer === "" || activePlayer === "playerOne") {
       setActivePlayer("playerTwo")
     }
@@ -95,8 +97,10 @@ const Home = ({ route }: any) => {
     if (gameStatus !== 'playing') {
       setGameStatus('playing');
     }
-    setPlayerTwoMoveCount((prev: number) => prev + 1);
-    setPlayerTwoTime((prev: number) => prev + incrementalValue);
+    if(activePlayer === "playerTwo") {
+      setPlayerTwoMoveCount((prev: number) => prev + 1);
+      setPlayerTwoTime((prev: number) => prev + incrementalValue);
+    }
     if (activePlayer === "" || activePlayer === "playerTwo") {
       setActivePlayer("playerOne")
     }
