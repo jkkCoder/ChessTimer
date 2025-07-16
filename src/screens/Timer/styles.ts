@@ -4,7 +4,7 @@ import { hp, wp } from "../../utils";
 export const styles = StyleSheet.create({
     timerScreenContainer: {
         flex: 1,
-        backgroundColor: "#312d2a",
+        backgroundColor: "#141427",
         paddingHorizontal: wp(3),
     },
     sectionTimerPillContainer: {
@@ -29,10 +29,11 @@ export const styles = StyleSheet.create({
         paddingVertical: hp(0.5),
     },
     sliderContainer : {
-        backgroundColor: 'gray',
         borderRadius: wp(2),
         padding: wp(3),
-        marginTop: hp(4)
+        marginTop: hp(4),
+        backgroundColor: "#1c2b38"
+
     },
     sliderWrapper : {
         width: '93%',
@@ -46,7 +47,7 @@ export const styles = StyleSheet.create({
         alignItems:'center',
     },
     slider: {
-        width: '100%'
+        width: '100%',
     },
     timeHeader:{
         textAlign: 'center',
@@ -65,7 +66,7 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         alignSelf: 'center',
-        backgroundColor: '#A5A9B1',
+        backgroundColor: '#141427',
         height: hp(4),
         width: '90%',
         borderRadius: wp(2.5)

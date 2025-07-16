@@ -4,15 +4,17 @@ import { createStaticNavigation, NavigationContainer } from '@react-navigation/n
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screens/Home';
 import Timer from './src/screens/Timer';
+import toastConfig from './toastConfig';
+import Toast from 'react-native-toast-message';
 
 const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Home',
+  initialRouteName: 'Timer',
   screenOptions: {
     headerShown: false,
   },
   screens: {
-    Home: Home,
-    Timer: Timer
+    Timer: Timer,
+    Home: Home
   },
 });
 
@@ -22,6 +24,7 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Navigation />
+      <Toast config={toastConfig} />
     </SafeAreaView>
   )
 }
@@ -32,6 +35,6 @@ const styles = StyleSheet.create({
    container: {
     flex: 1,
     backgroundColor: "white",
-    // paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

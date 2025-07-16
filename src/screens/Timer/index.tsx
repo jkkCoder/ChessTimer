@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import {View, Text, Pressable, SectionList} from 'react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {chessTimeControls} from '../../constants/timerPillConstants';
-import {hp, wp} from '../../utils';
+import {formatDuration, hp, wp} from '../../utils';
 import {styles} from './styles';
 import TimerPill from '../../components/timerPill';
 import Slider from '@react-native-community/slider';
+import Toast from 'react-native-toast-message';
 
 const Timer: React.FC = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -17,6 +18,43 @@ const Timer: React.FC = () => {
   const initialEndTimeLable = 120; 
   const bonusEndTimeLabel = 60;
 
+  // workaound to get the displayString from Slider : 
+  var initialTimeCalcFromSlider = initialTime * 60
+  let computedDisplayString = "";
+
+  const formatted = formatDuration(initialTimeCalcFromSlider);
+
+  if (initialTimeCalcFromSlider) {
+    const formattedTime = formatted.endsWith(':00')
+      ? formatted.replace(':00', '')
+      : formatted;
+
+    if (bonusTime) {
+      computedDisplayString = `${formattedTime} | ${bonusTime}`;
+    } else {
+      computedDisplayString = `${formattedTime} min`;
+    }
+  }
+
+  const handleSliderSelectButtonCTA = () => {
+    if(computedDisplayString && initialTimeCalcFromSlider) {
+      navigation.navigate('Home', {
+        displayString: computedDisplayString,
+        time: initialTimeCalcFromSlider,
+        incrementalValue: bonusTime
+      })
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Please select custom time',
+        text2: 'Custom time must be greater than 0',
+        position: 'bottom',
+        visibilityTime: 3000,
+        autoHide: true,
+        bottomOffset: 90,
+      });
+    }
+  }
 
   return (
     <View style={styles.timerScreenContainer}>
@@ -98,12 +136,7 @@ const Timer: React.FC = () => {
 
         <Pressable 
           style={styles.selectBtn}
-          onPress={() => {
-            navigation.navigate('Home',{
-              time: initialTime * 60,
-              incrementalValue: bonusTime
-            })
-          }}
+          onPress={handleSliderSelectButtonCTA}
         >
           <Text style={styles.btnColor}>Select</Text>
         </Pressable>
