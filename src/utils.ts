@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { Dimensions } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
@@ -21,6 +20,7 @@ export const formatDuration = (seconds: number | undefined | null): string => {
   if (seconds <= 0) {
     return '00:00';
   }
-
-  return moment.utc(seconds * 1000).format('mm:ss');
+  const mm = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const ss = (seconds % 60).toString().padStart(2, '0');
+  return `${mm}:${ss}`;
 };

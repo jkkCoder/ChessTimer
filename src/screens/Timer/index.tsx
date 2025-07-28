@@ -123,7 +123,7 @@ const Timer: React.FC = () => {
             <Slider
               style={styles.slider}
               minimumValue={0}
-              maximumValue={120}
+              maximumValue={60}
               value={bonusTime}
               thumbTintColor="#D4AF37"
               minimumTrackTintColor="#D4AF37"
